@@ -1,0 +1,109 @@
+Input
+RSIPeriod(14);
+Stochastic1PeriodK(8);
+Stochastic1PeriodD(3);
+Stochastic2PeriodK(14);
+Stochastic2PeriodD(3);
+
+PerMHUll(6); //HullPeriod/HullDivisor;
+PerMHUll2(3.5); //sqrt(HullPeriod);
+
+HullPeriod(12);
+HullDivisor(2);
+
+
+var
+bufRSI,bufStoch1,bufStoch2,bufRSI,bufStoch1,bufStoch2,medStoch1,medStoch2: Float;
+threshold,ilimit,bufHistUP,bufHistDN,bufHistNO, inner, MMHULL: float;
+DrawHullTrend: Boolean;
+
+
+Inicio
+
+DrawHullTrend:= true; //(1=true ; 0=false)
+threshold:=50;
+ilimit:=0;
+
+bufRSI:= (rsi(RSIPeriod,0));
+bufStoch1:= (fastStochastic(Stochastic1PeriodK)); 
+medStoch1:= Mediaexp(Stochastic1PeriodD,bufStoch1);
+bufStoch2:= (slowStochastic(Stochastic2PeriodK));
+medStoch2:= Mediaexp(Stochastic2PeriodD,bufStoch2);
+
+
+bufRSI:= (bufRSI-threshold);
+bufStoch1:= (bufStoch1-threshold);
+bufStoch2:= (bufStoch2-threshold);
+
+
+bufHistUP:=0;
+bufHistDN:=0;
+bufHistNO:=0;
+
+
+
+{Execução: Oscilador}
+  Se (bufRSI > ilimit) and 
+  //(bufStoch1 > medStoch1) and
+ // (bufStoch2 > medStoch2) and
+  (bufStoch1 > ilimit) and 
+  (bufStoch2 > ilimit) então 
+  bufHistUP:= bufStoch2
+  
+  Senão se (bufRSI < ilimit) and 
+ // (bufStoch1 < medStoch1) and
+ // (bufStoch2 < medStoch2) and
+  (bufStoch1 < ilimit) and 
+  (bufStoch2 < ilimit) então 
+  bufHistDN:= bufStoch2
+   Else
+   bufHistNO:= bufStoch2;
+
+inner := 2 * mediaexp(PerMHUll,close)- mediaexp(HullPeriod,close);
+MMHULL:= mediaexp(4,inner); 
+
+
+//if (DrawHullTrend) then
+
+// PaintBar(clvermelho);
+
+//if MMHULL>MMHULL[1] then
+//PaintBar(clverdelimão);
+{Execução: Oscilador}
+
+  Se (bufRSI > ilimit) and 
+
+  (bufStoch1 > ilimit) and 
+  (bufStoch2 > ilimit) então 
+  PaintBar(clverde)
+  
+  Senão se (bufRSI < ilimit) and 
+  (bufStoch1 < ilimit) and 
+  (bufStoch2 < ilimit) então 
+  PaintBar(clvermelho)
+   Else
+   PaintBar(clcinza);
+
+
+
+
+plot (0);
+Plot2 (bufHistUP);
+Plot3 (bufHistDN);
+Plot4 (bufHistNO);
+       
+end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
