@@ -1,0 +1,91 @@
+input
+Dados(Close);
+
+var 
+nVar,nSom : integer;
+
+
+Inicio
+{Minima}
+nVar := 2;
+Nsom := 0;
+
+nVar := 1;
+Nsom := 0;
+
+  se (Máxima >= PriorCote(3)) e (close[1] <= PriorCote(3)) e (Máxima[1] <= PriorCote(3))then  ///0
+     nsom := nsom +1; 
+
+  se (Minima <= PriorCote(3)) e (close[1]>= PriorCote(3)) e (Minima[1] >= PriorCote(3))then ///1
+     nsom := nsom +1;  
+  
+  Se NVar = nSom then
+  PaintBar(clVermelho);
+
+{Maxima}
+nVar := 1;
+Nsom := 0;
+
+  se (Máxima >= PriorCote(2)) e (close[1] <= PriorCote(2)) e (Máxima[1] <= PriorCote(2))then  ///0
+     nsom := nsom +1; 
+
+  se (Minima <= PriorCote(2)) e (close[1]>= PriorCote(2)) e (Minima[1] >= PriorCote(2))then ///1
+     nsom := nsom +1;  
+  
+  Se NVar = nSom then
+  PaintBar(clazulmarinho);
+
+{Ajuste}
+nVar := 1;
+Nsom := 0;
+
+  se (Máxima >= PriorCote(4)) e (close[1] <= PriorCote(4)) e (Máxima[1] <= PriorCote(4))then  ///0
+     nsom := nsom +1; 
+
+  se (Minima <= PriorCote(4)) e (close[1]>= PriorCote(4)) e (Minima[1] >= PriorCote(4))then ///1
+     nsom := nsom +1;  
+  
+  Se NVar = nSom then
+  PaintBar(clfucsia);                                    
+
+{Fechamento}
+nVar := 1;
+Nsom := 0;
+
+  se (Máxima >= PriorCote(0)) e (close[1] <= PriorCote(0)) e (Máxima[1] <= PriorCote(0))then  ///0
+     nsom := nsom +1; 
+
+  se (Minima <= PriorCote(0)) e (close[1]>= PriorCote(0)) e (Minima[1] >= PriorCote(0))then ///1
+     nsom := nsom +1;  
+  
+  Se NVar = nSom then
+  PaintBar(clcinza);   
+
+end;
+ ///0-Fechamento
+ ///1-Abertura
+ ///2-Máxima
+ ///3-Minima
+ ///4-Ajuste
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
