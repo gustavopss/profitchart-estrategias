@@ -1,0 +1,23 @@
+{Utilizar no grafico de Candle}
+
+input
+Dados(Close);
+
+var 
+SinalCompra, SinalVenda, Sinal : integer;
+
+
+Inicio
+
+{ Setup: PFR }
+
+
+Se (Lowest(low,2) < Lowest(low,2)[1]) e (close > close[1]) então ///(SlowStochastic(8) < 20) então
+PaintBar(clazulmarinho);
+  
+Se (highest(high,2) > highest(high,2)[1]) e (close < close[1]) então ///(SlowStochastic(8) > 80)então
+PaintBar(clvermelho);
+
+Se (high < high[1]) e (Low > Low[1]) então
+PaintBar(clamarelo);
+Fim;
