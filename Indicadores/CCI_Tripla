@@ -1,0 +1,12 @@
+INPUT
+CCI1(34);
+CCI2(144);
+CCI3(610);
+
+Begin
+
+Plot ((((((CCI(CCI2)))+(CCI(CCI1))+(CCI(CCI3)))/3)*(1))); //((((CCI(CCI3)*(3))+((CCI(CCI2))*(2))+(CCI(CCI1)))/6))
+Plot2 (CCI(CCI3));//((CCI(CCI3)-(CCI(CCI2))-(CCI(CCI1)))*(1))
+PLOT3 (CCI(CCI2));
+plot4((CCI(CCI1)));
+end;
