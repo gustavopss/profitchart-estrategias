@@ -1,0 +1,33 @@
+{
+Cor AMA Rapida
+Desenvolvido por José Moraes, é uma regra de coloração e indicador baseados na direção de uma 
+Adaptive Moving Average modificada para mais rapida e ao mesmo tempo suave.  
+Azul = Altista
+Vermelho = Baixista
+Cianza = Neutro
+Contato: 71 99211-1516
+}
+var
+  iColorPlot : Integer;
+  fAMA: Float;
+Begin
+  if (Close > MedianPrice) Then 
+  
+  fAMA := (MedianPrice/2+High/2) * Power(2/3.14,2) + (1 - Power(2/3.14,2)) * fAMA[1]
+  
+  
+  
+  Else if (Close < MedianPrice) Then fAMA := (MedianPrice/2+Low/2) * Power(2/3.14,2) + (1 - Power(2/3.14,2)) * fAMA[1]
+  
+  Else fAMA := fAMA[1];
+  if (fAMA > Media(2,fAMA)) and (Close > Open) Then iColorPlot := clverde; 
+  if (fAMA < Media(2,fAMA)) and (Close < Open) Then iColorPlot := clVermelho; 
+  if ((fAMA > Media(2,fAMA)) and (fAMA[1] < Media(2,fAMA[1]))) or ((fAMA < Media(2,fAMA)) and (fAMA[1] > Media(2,fAMA[1]))) Then
+    begin
+      iColorPlot := clbranco;
+    End;
+  PaintBar(iColorPlot);
+  SetPlotWidth(1,2);
+  SetPlotColor(1,iColorPlot);
+  Plot(fAMA);
+End;
