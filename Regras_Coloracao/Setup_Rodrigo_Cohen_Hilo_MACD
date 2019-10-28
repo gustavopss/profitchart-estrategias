@@ -1,0 +1,49 @@
+{Setup do Rodrigo Cohen, dever utilizado no 5R.}
+input
+HiloPeriodo(13);
+  Mlonga(55);
+  Mcurta(26);
+  Periodo(13);
+  VRef (0);
+
+var 
+indicadoresCompra, indicadoresVenda, minimoIndicadores : integer;
+nMACD  : float;
+vMACD: Integer;
+
+
+Inicio
+  { Defina a quantidade de indicadores na direção (compra ou venda) necessários para entrada: }
+  minimoIndicadores := 2;
+
+  indicadoresCompra := 0;
+  indicadoresVenda  := 0;
+
+{ Indicador: MACD }
+  nMACD := Macd(mlonga,mcurta, periodo)|1|;
+  vMACD := vref ;
+
+ Se (nMACD > vMACD) Então
+// (close > close[1]) então
+ 	indicadoresCompra := indicadoresCompra + 1
+  
+ Senão Se (nMACD < vMACD) Então 
+ //(close < close[1]) então
+indicadoresVenda  := indicadoresVenda  + 1; 
+
+ { Indicador: HILO}
+
+  if (HiloActivator(HiloPeriodo) < Close) then
+indicadoresCompra := indicadoresCompra + 1
+  
+  ELSE if (HiloActivator(HiloPeriodo) > Close) then
+indicadoresVenda  := indicadoresVenda  + 1; 
+
+{Execução: Renko}
+  Se (indicadoresCompra = minimoIndicadores) então 
+  PaintBar(clverdelimão)
+  Senão se (indicadoresVenda = minimoIndicadores) então 
+  PaintBar(clvermelho)
+ Else
+ PaintBar(clbranco);
+end;
